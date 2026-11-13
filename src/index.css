@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────── Design tokens (RGB triplets so Tailwind can apply alpha) ───────── */
+:root,
+html[data-theme='light'] {
+  --bg: 246 247 251; --surface: 255 255 255; --sunken: 237 240 247;
+  --ink: 17 28 51; --muted: 84 96 122; --line: 214 220 234;
+  --primary: 52 71 217; --primary-soft: 228 232 252; --primary-deep: 38 53 176; --on-primary: 255 255 255;
+  --danger: 200 50 40; --danger-soft: 253 232 229;
+  --simple: 52 71 217; --simple-soft: 228 232 252; --simple-deep: 38 53 176;
+  --visual: 20 160 118; --visual-soft: 220 246 237; --visual-deep: 8 100 72;
+  --listen: 240 90 70; --listen-soft: 254 232 228; --listen-deep: 176 48 32;
+  --example: 255 184 28; --example-soft: 255 243 208; --example-deep: 122 80 0;
+  --practice: 139 92 246; --practice-soft: 238 232 254; --practice-deep: 91 52 190;
+}
+html[data-theme='dark'] {
+  --bg: 13 18 32; --surface: 22 30 50; --sunken: 30 40 64;
+  --ink: 236 240 250; --muted: 160 172 198; --line: 52 64 94;
+  --primary: 120 140 255; --primary-soft: 36 44 92; --primary-deep: 176 188 255; --on-primary: 10 14 40;
+  --danger: 255 120 110; --danger-soft: 70 28 28;
+  --simple: 120 140 255; --simple-soft: 36 44 92; --simple-deep: 176 188 255;
+  --visual: 52 201 152; --visual-soft: 18 66 54; --visual-deep: 120 230 190;
+  --listen: 255 125 105; --listen-soft: 74 34 30; --listen-deep: 255 170 155;
+  --example: 255 200 70; --example-soft: 70 52 14; --example-deep: 255 215 120;
+  --practice: 168 130 255; --practice-soft: 52 38 92; --practice-deep: 200 178 255;
+}
+html[data-theme='contrast'] {
+  --bg: 0 0 0; --surface: 0 0 0; --sunken: 24 24 24;
+  --ink: 255 255 255; --muted: 235 235 235; --line: 255 255 255;
+  --primary: 255 221 0; --primary-soft: 34 30 0; --primary-deep: 255 221 0; --on-primary: 0 0 0;
+  --danger: 255 140 140; --danger-soft: 40 0 0;
+  --simple: 130 190 255; --simple-soft: 0 20 40; --simple-deep: 160 205 255;
+  --visual: 80 255 190; --visual-soft: 0 36 24; --visual-deep: 140 255 210;
+  --listen: 255 150 130; --listen-soft: 44 10 6; --listen-deep: 255 180 165;
+  --example: 255 221 0; --example-soft: 36 30 0; --example-deep: 255 230 90;
+  --practice: 200 160 255; --practice-soft: 30 12 60; --practice-deep: 220 190 255;
+}
+/* Reading-friendly mode: calmer paper tone (light theme only) + Lexend + generous spacing */
+html.reading[data-theme='light'] { --bg: 251 248 238; --surface: 255 253 246; --sunken: 242 237 222; --line: 224 216 194; }
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { @apply bg-bg font-sans text-ink antialiased; min-height: 100vh; }
+  h1, h2, h3, h4 { @apply font-display; letter-spacing: -0.02em; text-wrap: balance; }
+  p { text-wrap: pretty; }
+  :focus-visible { outline: 3px solid rgb(var(--ink)); outline-offset: 3px; border-radius: 6px; }
+  ::selection { background: rgb(var(--primary) / 0.25); }
+  html.reading body { font-family: 'Lexend', 'Atkinson Hyperlegible', system-ui, sans-serif; letter-spacing: 0.012em; word-spacing: 0.08em; }
+  html[data-theme='contrast'] a:not(.btn) { text-decoration: underline; }
+  html.reduce-motion *, html.reduce-motion *::before, html.reduce-motion *::after {
+    animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important; scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  .btn { @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-ctl px-4 py-2 text-[0.95rem] font-bold transition disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply border-2 border-ink bg-primary text-primary-on shadow-pop-sm hover:translate-x-px hover:translate-y-px hover:shadow-none active:translate-x-[3px] active:translate-y-[3px]; }
+  .btn-secondary { @apply border-2 border-ink/80 bg-surface text-ink hover:bg-sunken; }
+  .btn-ghost { @apply text-ink hover:bg-sunken; }
+  .btn-danger { @apply border-2 border-danger bg-danger-soft text-danger hover:bg-danger hover:text-surface; }
+  .btn-sm { @apply min-h-[38px] px-3 py-1.5 text-sm; }
+  .btn-lg { @apply min-h-[52px] px-6 py-3 text-base; }
+  .card { @apply rounded-card border border-line bg-surface; }
+  .card-pad { @apply p-5 sm:p-6; }
+  .input { @apply w-full rounded-ctl border-2 border-line bg-surface px-3.5 py-2.5 text-ink placeholder:text-muted/70 focus:border-primary focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-primary/20; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-sm font-semibold text-ink; }
+  .label { @apply mb-1.5 block text-sm font-bold text-ink; }
+  .muted { @apply text-muted; }
+  .h-page { @apply text-3xl font-extrabold sm:text-4xl; }
+  .skip-link { @apply absolute left-3 top-3 z-[100] -translate-y-24 rounded-ctl bg-ink px-4 py-2 font-bold text-bg focus:translate-y-0; }
+}
+
+.shimmer { position: relative; overflow: hidden; }
+.shimmer::after { content: ''; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgb(var(--surface) / 0.7), transparent); animation: shimmer 1.4s infinite; }
+.dotgrid { background-image: radial-gradient(rgb(var(--ink) / 0.14) 1px, transparent 1px); background-size: 18px 18px; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  .print-sheet { border: 1px solid #999 !important; box-shadow: none !important; }
+}
