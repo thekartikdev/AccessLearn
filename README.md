@@ -73,15 +73,6 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 VITE_GEMINI_API_KEY=your_gemini_api_key
 ```
 
----
-
-## 👥 Team Alpha
-
-* **Akriti Anand** (Team Leader) — Frontend Architecture, UI/UX, and Multi-Modal Learning Engine.
-* **Kartik** — Backend Cloud Infrastructure, Supabase Database, RLS Security, and AI Edge Functions.
-
----
-
 ## 📄 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
